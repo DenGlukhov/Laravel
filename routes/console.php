@@ -15,56 +15,39 @@ use Illuminate\Support\Facades\Artisan;
 |
 */
 
+Artisan::command('importCategoriesFromFile', function() {
+
+});
+
 Artisan::command('parseEKatalog', function() {
-    $url = 'https://www.e-katalog.ru/ek-list.php?search_=rtx+3080&katalog_from_search_=189';
-    $data = file_get_contents($url);
-    $dom = new DomDocument();
-    @$dom->loadHTML($data); //@ - оператор, который позволяет проигнорировать возможные ошибки в стянутом коде, в основном используется при работе с loadHTML.
 
-    $xpath = new DomXPath($dom);
-
-    $totalProductsString = $xpath->query("//span[@class='t-g-q']")[0]->nodeValue ?? false;
-    preg_match_all('/\d+/', $totalProductsString, $matches); // Поиск чисел в строке
-    $totalProducts = (int) $matches[0][0];
-   
-    $divs = $xpath->query("//div[@class='model-short-div list-item--goods   ']");
-    $productsOnOnePage = $divs->length;
-    $pages = ceil($totalProducts / $productsOnOnePage);
-
-    $products = [];
-
-    foreach ($divs as $div) {
-       $a = $xpath->query("descendant::a[@class='model-short-title no-u']", $div);
-       $name = $a[0]->nodeValue;
-       
-       $price = 'Нет в наличии';
-       $ranges = $xpath->query("descendant::div[@class='model-price-range']", $div);
-       if ($ranges->length == 1) {
-           foreach ($ranges[0]->childNodes as $child) {
-               if ($child->nodeName == 'a') {
-                   $price = 'от ' . $child->nodeValue;
-               }
-           }
-        }
-       $ranges = $xpath->query("descendant::div[@class='pr31 ib']", $div);
-       if ($ranges->length == 1) {
-           $price = $ranges[0]->nodeValue;
-       }
-       $products[] = [
-           'name' => $name,
-           'price' => $price,
-       ];
-    }
-
-    for ($i = 1; $i < $pages; $i++) {
-        $nextUrl = "$url&page_=$i";
-
-        $data = file_get_contents($nextUrl);
+    $pageCounter = 0;
+    do {
+        $url = 'https://www.e-katalog.ru/ek-list.php?search_=rtx+3090&katalog_from_search_=189' . "&page_=$pageCounter";
+        $data = file_get_contents($url);
         $dom = new DomDocument();
-        @$dom->loadHTML($data);
+        @$dom->loadHTML($data); //@ - оператор, который позволяет проигнорировать возможные ошибки в стянутом коде, в основном используется при работе с loadHTML.
 
         $xpath = new DomXPath($dom);
         $divs = $xpath->query("//div[@class='model-short-div list-item--goods   ']");
+
+        if ($pageCounter == 0) {
+            
+            $totalProductsString = $xpath->query("//span[@class='t-g-q']")[0]->nodeValue ?? false; //Строка в которой содержится указание о найденном количество товаров.
+            preg_match_all('/\d+/', $totalProductsString, $matches); //Поиск чисел в строке
+            $totalProducts = (int) $matches[0][0];
+            $productsOnOnePage = $divs->length;
+            $pages = ceil($totalProducts / $productsOnOnePage);
+
+            $products = [];
+        }
+
+        // $data = file_get_contents($url);
+        // $dom = new DomDocument();
+        // @$dom->loadHTML($data);
+
+        // $xpath = new DomXPath($dom);
+        // $divs = $xpath->query("//div[@class='model-short-div list-item--goods   ']");
 
         foreach ($divs as $div) {
             $a = $xpath->query("descendant::a[@class='model-short-title no-u']", $div);
@@ -82,18 +65,26 @@ Artisan::command('parseEKatalog', function() {
                     }
                 }
             }
-            $ranges = $xpath->query("descendant::div[@class='pr31 ib']", $div);
+            $singlePrice = $xpath->query("descendant::div[@class='pr31 ib']", $div);
             
-            if ($ranges->length == 1) {
-                $price = $ranges[0]->nodeValue;
+            if ($singlePrice->length == 1) {
+                $price = $singlePrice[0]->nodeValue;
             }
-            $products[] = [
+            $products [] = [
                 'name' => $name,
                 'price' => $price,
             ];
         }
-    }
-    dd($products);
+        $pageCounter++;
+    } while ($pageCounter < $pages);
+    dump($products);
+
+    // $file = fopen('videocards.csv', 'w');
+
+    // foreach ($products as $product) {
+    //     fputcsv($file, $product, ';');
+    // }
+    // fclose($file);
 });
 
 Artisan::command('massCategoriesInsert', function () {
@@ -116,7 +107,7 @@ Artisan::command('massCategoriesInsert', function () {
 
 Artisan::command('updateCategory', function () {
     Category::where('id', 2)->update([
-        'description' => 'Которых нигде нет, надеюсь, что это временно.'
+        'description' => 'Которых нигде нет, и стоят они как космолет.'
     ]);
 });
 
