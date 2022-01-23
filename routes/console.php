@@ -29,7 +29,6 @@ Artisan::command('parseEKatalog', function() {
    
     $divs = $xpath->query("//div[@class='model-short-div list-item--goods   ']");
     $productsOnOnePage = $divs->length;
-
     $pages = ceil($totalProducts / $productsOnOnePage);
 
     $products = [];
@@ -51,7 +50,7 @@ Artisan::command('parseEKatalog', function() {
        if ($ranges->length == 1) {
            $price = $ranges[0]->nodeValue;
        }
-       $products [] = [
+       $products[] = [
            'name' => $name,
            'price' => $price,
        ];
@@ -88,7 +87,7 @@ Artisan::command('parseEKatalog', function() {
             if ($ranges->length == 1) {
                 $price = $ranges[0]->nodeValue;
             }
-            $products [] = [
+            $products[] = [
                 'name' => $name,
                 'price' => $price,
             ];
