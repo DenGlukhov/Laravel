@@ -16,7 +16,28 @@ use Illuminate\Support\Facades\Artisan;
 */
 
 Artisan::command('importCategoriesFromFile', function() {
+    
+    $file = fopen('categories.csv', 'r');
 
+    $i = 0;
+    $insert = [];
+    while ($row = fgetcsv($file, 1000, ';')) {
+       
+        if ($i++ == 0) {
+            $bom = pack('H*', 'EFBBBF'); //Создает запись "невидимого символа", который создает Excel.
+            $row = preg_replace("/^$bom/", '', $row); //С помощью регулярного выражения ищет "символ" и заменяте его на пустое значение, после чего записывает результат в $row.
+
+            $columns = $row;
+            continue;
+        }
+
+        $data = array_combine($columns, $row);
+        $data['created_at'] = date('Y-m-d H:i:s');
+        $data['updated_at'] = date('Y-m-d H:i:s');
+        $insert [] = $data;
+    }
+
+    Category::insert($insert);
 });
 
 Artisan::command('parseEKatalog', function() {
@@ -42,13 +63,6 @@ Artisan::command('parseEKatalog', function() {
             $products = [];
         }
 
-        // $data = file_get_contents($url);
-        // $dom = new DomDocument();
-        // @$dom->loadHTML($data);
-
-        // $xpath = new DomXPath($dom);
-        // $divs = $xpath->query("//div[@class='model-short-div list-item--goods   ']");
-
         foreach ($divs as $div) {
             $a = $xpath->query("descendant::a[@class='model-short-title no-u']", $div);
             $name = $a[0]->nodeValue;
@@ -70,7 +84,7 @@ Artisan::command('parseEKatalog', function() {
             if ($singlePrice->length == 1) {
                 $price = $singlePrice[0]->nodeValue;
             }
-            $products [] = [
+            $products[] = [
                 'name' => $name,
                 'price' => $price,
             ];
@@ -79,12 +93,12 @@ Artisan::command('parseEKatalog', function() {
     } while ($pageCounter < $pages);
     dump($products);
 
-    // $file = fopen('videocards.csv', 'w');
+    $file = fopen('videocards.csv', 'w');
 
-    // foreach ($products as $product) {
-    //     fputcsv($file, $product, ';');
-    // }
-    // fclose($file);
+    foreach ($products as $product) {
+        fputcsv($file, $product, ';');
+    }
+    fclose($file);
 });
 
 Artisan::command('massCategoriesInsert', function () {
