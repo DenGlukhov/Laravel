@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\exportCategories;
+use App\Jobs\ExportCategories;
+use App\Jobs\ImportCategories;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,11 @@ class AdminController extends Controller
 
     public function exportCategories () 
     {
-        exportCategories::dispatch();
+        ExportCategories::dispatch();
+    }
+
+    public function importCategories () 
+    {
+        ImportCategories::dispatch();
     }
 }
