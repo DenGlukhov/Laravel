@@ -27,4 +27,10 @@ class HomeController extends Controller
         $categories = Category::get();
         return view('home', compact('categories'));
     }
+
+    public function category (Category $category)
+    {
+        $products = $category->products;
+        return view('category', compact('products'));
+    }
 }

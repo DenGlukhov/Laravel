@@ -24,8 +24,10 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/products', [AdminController::class, 'products'])->name('adminProducts');
     Route::get('/categories', [AdminController::class, 'categories'])->name('adminCategories');
     Route::get('/enterAsUser/{id}', [AdminController::class, 'enterAsUser'])->name('enterAsUser');
+    Route::post('/exportCategories', [AdminController::class, 'exportCategories'])->name('exportCategories');
 });
 
+Route::get('category/{category}', [HomeController::class, 'category'])->name('category');
 Route::get('profile/{id}', [ProfileController::class, 'profile'])->name('profile');
 Route::post('profile/save', [ProfileController::class, 'save'])->name('saveProfile');
 
