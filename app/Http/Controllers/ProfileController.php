@@ -53,10 +53,7 @@ class ProfileController extends Controller
                 $fileName = time() . rand(10000, 99999). "." . $ext;
                 $picture->storeAs('public/users', $fileName);
                 $user->picture = "users/$fileName";
-            } else {
-
-            }
-
+            } 
             
         }
 

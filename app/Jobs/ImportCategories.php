@@ -31,8 +31,9 @@ class ImportCategories implements ShouldQueue
      */
     public function handle()
     {
-        $file = fopen('importCategories.csv', 'r');
-
+        $path = 'storage/app/public/categories/importCategories.csv';
+        $file = fopen($path, 'r');
+ 
         $i = 0;
         $insert = [];
         while ($row = fgetcsv($file, 1000, ';')) {
@@ -51,6 +52,7 @@ class ImportCategories implements ShouldQueue
             $insert [] = $data;
         }
 
-        Category::insert($insert);
+        Category::insert($insert); //Вероятно стоит добавить функцию удаления файла csv, после импорта, для экономии места в будущем.
+        
     }
 }

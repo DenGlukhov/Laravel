@@ -6,26 +6,31 @@
 
 @section('styles')
     <style>
-        .unload-upload-button {
+        .unload_upload_button {
             width: 235px;
+        }
+        .next_button {
+           width: 350px; 
         }
     </style>
 @endsection
 
 @section('content')
-    <div class="container">
-        <div class="mb-2">
-            <a href="{{ route('adminUsers') }}">Список пользователей</a>
-            <a href="{{ route('adminProducts') }}">Список продуктов</a>
-            <a href="{{ route('adminCategories') }}">Список категорий</a>
-        </div>
-        <form class="mb-2" method="post" action="{{ route('exportCategories') }}">
-            @csrf
-            <button type="submit" class="btn btn-primary unload-upload-button">Выгрузить категории</button>
-        </form>
-        <form method="post" action="{{ route('importCategories') }}">
-            @csrf
-            <button type="submit" class="btn btn-info unload-upload-button">Загрузить категории из файла</button>
-        </form>
-    </div>
+    <ul class="nav nav-pills">
+        <li class="nav-item col-4">
+            <a class="btn btn-warning next_button" aria-current="page" href="{{ route('adminUsers') }}">
+                <strong>Список пользователей</strong>
+            </a>
+        </li>
+        <li class="nav-item col-4">
+            <a class="btn btn-warning next_button" aria-current="page" href="{{ route('adminCategories') }}">
+                <strong>Список категорий</strong>
+            </a>
+        </li>
+        <li class="nav-item col-4">
+            <a class="btn btn-warning next_button" aria-current="page" href="{{ route('adminProducts') }}">
+                <strong>Список продуктов</strong>
+            </a>
+        </li>
+    </ul>
 @endsection
