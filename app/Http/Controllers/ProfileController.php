@@ -62,4 +62,11 @@ class ProfileController extends Controller
         $user->save(); //Вызываем метод save, чтобы сохранить изменения в базе.
         return back();
     }
-}
+
+    public function checkUser (User $user) {
+        $currentUser = Auth::user();
+        if ($currentUser->is_admin || $currentUser->id === $user->id) return false;
+        else return true;
+    }
+}   
+

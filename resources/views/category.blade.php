@@ -32,27 +32,35 @@
     <div class="container">
         <div class="row">
             @foreach ($products as $product)
-            <div class="col-3">
-                <div class="card mb-4" style="width: 18rem;">
-                    <img src="{{ asset('storage')}}/{{$product->picture }}" class="card-img-top" alt="{{ $product->name }}">
-                    <div class="card-body">
-                        <h5 class="card-title clip" title="{{ $product->name }}">
-                            {{ $product->name }}
-                        </h5>
-                        <p class="card-text clip" title="{{ $product->description }}">
-                            {{ $product->description }}
-                        </p>
-                            <div class="product-price">
-                                {{ $product->price }} руб.
-                            </div>
-                                <div class="product-buttons">
-                                    <button class="btn btn-success">+</button>
-                                    0
-                                    <button class="btn btn-danger">-</button>
+                <div class="col-3">
+                    <div class="card mb-4" style="width: 18rem;">
+                        <img src="{{ asset('storage')}}/{{$product->picture }}" class="card-img-top" alt="{{ $product->name }}">
+                        <div class="card-body">
+                            <h5 class="card-title clip" title="{{ $product->name }}">
+                                {{ $product->name }}
+                            </h5>
+                            <p class="card-text clip" title="{{ $product->description }}">
+                                {{ $product->description }}
+                            </p>
+                                <div class="product-price">
+                                    {{ $product->price }} руб.
                                 </div>
+                                <div class="product-buttons">
+                                    <form method="post" action="{{ route('addToCart')}}">
+                                        @csrf
+                                        <input name='id' hidden value="{{ $product->id }}">
+                                        <button class="btn btn-success">+</button>
+                                    </form>
+                                        {{ session("cart.$product->id") ?? 0 }}
+                                    <form method="post" action="{{ route('removeFromCart') }}">
+                                        @csrf
+                                        <input name="id" hidden value="{{ $product->id }}">
+                                        <button @empty (session("cart.$product->id")) disabled @endempty class="btn btn-danger">-</button>
+                                    </form>
+                                </div>
+                        </div>
                     </div>
                 </div>
-            </div>
             @endforeach
         </div>
     </div>

@@ -19,7 +19,7 @@ class AdminController extends Controller
         return view('admin.admin');
     }
 
-    public function users () 
+    public function users () // Список пользователей
     {
         $users = User::get();
         
@@ -30,17 +30,19 @@ class AdminController extends Controller
         return view('admin.users', $data);
     }
     
-    public function products () 
+    public function products () // Список продуктов
     {
         $products = Product::get();
+        $categories = Category::get();
         $data = [
             'title' => "Список продуктов",
             'products' => $products,
+            'categories' => $categories
         ];
         return view('admin.products', $data);
     }
     
-    public function categories () 
+    public function categories () // Список категорий
     {
         $categories = Category::get();
         $data = [
@@ -50,20 +52,60 @@ class AdminController extends Controller
         return view('admin.categories', $data);
     }
     
-    public function enterAsUser ($id) 
+    public function enterAsUser ($id) // Вход на сайт под любым пользователем из списка
     {
         Auth::loginUsingId($id);
         return redirect()->route('admin');
     }
 
-    public function exportCategories () 
+    public function createCategory (Request $request) // Создание новой категории
+    {
+        $input = $request->all();
+        $name = $input['name'];
+        $description = $input['description'];
+        $picture = $input['picture'] ?? null;
+        $category = new Category([
+            'name' => $name,
+            'description' => $description,
+            'picture' => $picture
+        ]);
+        request()->validate([
+            'name' => 'required',
+            'description' => "required",
+            'picture' => 'nullable|mimetypes:image/*',
+        ]);
+        if ($picture) {
+            $mimeType = $request->file('picture')->getMimeType();
+            $type = explode('/', $mimeType);
+
+            if ($type[0] == 'image') {
+                $ext = $picture->getClientOriginalExtension();
+                $fileName = time() . rand(10000, 99999). "." . $ext;
+                $picture->storeAs('public/categories', $fileName);
+                $category->picture = "categories/$fileName";
+            } 
+        } else {
+            $category->picture = 'categories/no_picture.png';
+        }
+        $category->save();
+        return back();
+    }
+
+    public function deleteCategory ($id)
+    {
+        Category::where('id', $id)->delete();
+        return back();
+    }
+
+    public function exportCategories () // Экспорт списка категорий в файл
     {
         ExportCategories::dispatch();
         session()->flash('startExportCategories');
+        return back();
         
     }
 
-    public function importCategories (Request $request)
+    public function importCategories (Request $request) // Импорт списка категорий из файла
     {
         $input = request()->all();
         $importFile = $input['importFile'] ?? null;
@@ -94,4 +136,56 @@ class AdminController extends Controller
         DeleteTemporaryFiles::dispatch();
         return back();
     }   
+
+    public function createProduct (Request $request) // Создание нового продукта
+    {
+        $input = $request->all();
+        $name = $input['name'];
+        $description = $input['description'];
+        $price = $input['price'];
+        $picture = $input['picture'] ?? null;
+        $category_id = $input['category_id'] ?? null;
+        
+        // if (!$category_id) {
+        //     session()->flash('categoryError');
+        //     return back();
+        // }
+
+        $product = new Product([
+            'name' => $name,
+            'description' => $description,
+            'price' => $price,
+            'picture' => $picture,
+            'category_id' => $category_id
+        ]);
+        request()->validate([
+            'name' => 'required',
+            'description' => "required",
+            'price' => "required",
+            'picture' => 'nullable|mimetypes:image/*',
+            'category_id' => 'required'
+        ]);
+        if ($picture) {
+            $mimeType = $request->file('picture')->getMimeType();
+            $type = explode('/', $mimeType);
+
+            if ($type[0] == 'image') {
+                $ext = $picture->getClientOriginalExtension();
+                $fileName = time() . rand(10000, 99999). "." . $ext;
+                $picture->storeAs('public/products', $fileName);
+                $product->picture = "products/$fileName";
+            } 
+        } else {
+            $product->picture = 'products/no_picture.png';
+        }
+        $product->save();
+
+        return back();
+    }
+    
+    public function deleteProduct ($id)
+    {
+        Product::where('id', $id)->delete();
+        return back();
+    }
 }

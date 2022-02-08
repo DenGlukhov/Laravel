@@ -52,7 +52,6 @@ class ImportCategories implements ShouldQueue
             $insert [] = $data;
         }
 
-        Category::insert($insert); //Вероятно стоит добавить функцию удаления файла csv, после импорта, для экономии места в будущем.
-        
+        Category::insert($insert); 
     }
 }

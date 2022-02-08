@@ -37,7 +37,7 @@
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Почта</label>
             <input type="email" name="email" value="{{ $user->email }}" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <div id="emailHelp" class="form-text">Мы не палим Вашу почту, честно :).</div>
+            <div id="emailHelp" class="form-text">Мы не палим Вашу почту, честно :)</div>
         </div>
         <div class="mb-3">
             <label class="form-label">Имя</label>
