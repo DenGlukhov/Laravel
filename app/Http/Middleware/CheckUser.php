@@ -20,9 +20,8 @@ class CheckUser
     {
         $user = Auth::user();
         $input = $request;
-        $id = preg_replace('/[^0-9]/', '', $input->server('REQUEST_URI'));
-               
-        if ($user->id == $id) return $next($request);
+                
+        if ($user->id == $input->id) return $next($request);
         else return redirect()->route("home");
     }
 }

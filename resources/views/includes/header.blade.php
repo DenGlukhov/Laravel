@@ -1,9 +1,13 @@
 <style>
-  .user_picture {
-      width: 30px;
-      border-radius: 30px;
-      display: block;
-  }
+    .image-block {
+        width: 30px;
+        height: 30px;
+        border-radius: 30px;
+        overflow: hidden;
+    }
+    .user_picture {
+        width: 30px;
+    }
 </style>
 
 <header class="p-3 bg-dark text-white">
@@ -17,12 +21,7 @@
       </a>
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
         <li><a href="/" class="nav-link px-2 text-secondary">EShop</a></li>
-        <li><a href="#" class="nav-link px-2 text-white">Контакты</a></li>
-        <li><a href="#" class="nav-link px-2 text-white">О нас</a></li>
       </ul>
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
-        <input type="search" class="form-control form-control-dark" placeholder="Search..." aria-label="Search">
-      </form>
       <div class="text-end">
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li>
@@ -52,7 +51,9 @@
               
             <li class="nav-item dropdown">
               <li class='mt-1'>
-                <img class='user_picture'  src="{{ asset('storage') }}/{{ Auth::user()->picture }}">
+                <div class="image-block">
+                  <img class='user_picture'  src="{{ asset('storage') }}/{{ Auth::user()->picture }}">
+                </div>
               </li>
               <a id="navbarDropdown" class="nav-link dropdown-toggle px-2 text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 {{ Auth::user()->name }}

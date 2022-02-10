@@ -6,10 +6,14 @@
 
 @section('styles')
     <style>
+        .image_block {
+            width: 180px;
+            height: 180px;
+            border-radius: 180px;
+            overflow: hidden;
+        }
         .user-picture {
             width: 180px;
-            border-radius: 180px;
-            display: block;
         }
         .main-address {
             font-weight: bold;
@@ -31,8 +35,11 @@
         <input type="hidden" value="{{ $user->id }}" name="userId">
         <div class="mb-3">
             <label class="form-label">Изображение</label>
-            <img class='user-picture mb-2' src="{{ asset('storage') }}/{{ $user->picture }}">
+                <div class="image_block mb-2">
+                    <img class='user-picture mb-2' src="{{ asset('storage') }}/{{ $user->picture }}">
+                </div>        
             <input type="file" name="picture" class="form-control">
+                
         </div>
         <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Почта</label>
@@ -43,22 +50,39 @@
             <label class="form-label">Имя</label>
             <input name="name" value="{{ $user->name }}" class="form-control">
         </div>
+        <div>
+            <label class="form-label">Текущий пароль:</label>
+            <input type="password" autocomplete="off" name="current_password" class="form-control mb-2">
+        </div>
+        <div>
+            <label class="form-label">Новый пароль:</label>
+            <input type="password" name="password" class="form-control mb-2">
+        </div>
+        <div>
+            <label class="form-label">Повторите новый пароль:</label>
+            <input type="password" name="password_confirmation" class="form-control mb-2">
+        </div>
         <div class="mb-3">
             <label class="form-label">Список адресов:</label>
             <ul>
                 @forelse ($user->addresses as $address)
-                    <li class="@if($address->main) main-address @endif">
-                        {{$address->address}}
-                    </li>
-                @empty
+                    <label for="{{ $address->id }}">{{$address->address}}</label>
+                    <input class="form-check-input" @if ($address->main) checked @endif id="{{ $address->id }}" name="main_address" type="radio" value="{{ $address->id }}"><br>
+                @empty 
                     <em>- Адреса не указаны -</em>
                 @endforelse
             </ul>
         </div>
         <div class="mb-3">
             <label class="form-label">Новый адрес</label>
-            <input name="new_address" class="form-control">
+            <input name="new_address" class="form-control" placeholder="Введите новый адрес">
+                <div class="form-check mt-1">
+                    <input name="set_main_address" class="form-check-input" type="checkbox" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                    Сделать адресом по-умолчанию
+                    </label>
+                </div>
         </div>
-            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <button type="submit" class="btn btn-warning"><strong>Сохранить</strong></button>
     </form>
 @endsection
