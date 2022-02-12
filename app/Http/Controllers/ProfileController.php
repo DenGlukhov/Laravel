@@ -10,9 +10,9 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
-    public function profile($id)
+    public function profile(User $user)
     {
-        $user = User::findOrFail($id);
+        //$user = User::findOrFail($id); //Конструкция использовалась, когда в метод передавался просто id.
         return view('profile', compact('user'));
     }
     
@@ -24,8 +24,8 @@ class ProfileController extends Controller
         $userId = $input['userId'];
         $picture = $input['picture'] ?? null;
         $newAddress = $input['new_address'];
-        $mainAddress = $input['main_address'] ?? '';
-        $setMainAddress = $input['set_main_address'] ?? '';
+        $mainAddress = $input['main_address'] ?? null;
+        $setMainAddress = $input['set_main_address'] ?? null;
 
         $user = User::find($userId); //Поиск пользователя с заданным id.
     
@@ -33,13 +33,15 @@ class ProfileController extends Controller
             'name' => 'required',
             'email' => "email|required|unique:users,email,{$user->id}",
             'picture' => 'mimetypes:image/*',
-            'current_password' => 'current_password|nullable',
+            'current_password' => 'current_password|required_with:password|nullable',
             'password' => 'confirmed|min:8|nullable'
         ]);
 
-        $user->password = Hash::make($input['password']);
-        $user->save();
-
+        if ($input['password'] && $input['current_password']) {
+            $user->password = Hash::make($input['password']);
+            $user->save();
+        }
+       
         Address::where('user_id', $user->id)->update([
             'main' => 0,
         ]);
@@ -82,13 +84,8 @@ class ProfileController extends Controller
         $user->name = $name; //Присваиваем новое имя пользователя.
         $user->email = $email; //Присваиваем новую почту.
         $user->save(); //Вызываем метод save, чтобы сохранить изменения в базе.
+        session()->flash('saveProfileSuccess');
         return back();
-    }
-
-    public function checkUser (User $user) {
-        $currentUser = Auth::user();
-        if ($currentUser->is_admin || $currentUser->id === $user->id) return false;
-        else return true;
     }
 }   
 

@@ -1,12 +1,13 @@
 <style>
-    .image-block {
+    .image_block {
         width: 30px;
         height: 30px;
-        border-radius: 30px;
+        
         overflow: hidden;
     }
     .user_picture {
         width: 30px;
+        border-radius: 30px;
     }
 </style>
 
@@ -43,7 +44,7 @@
             
             @else
             
-            @if (Auth::user()->is_admin)
+            @if (Auth::user()->isAdmin())
               <li class="nav-item">
                 <a class="nav-link px-2 text-white" href="{{ route('admin') }}">Админка</a>
               </li>
@@ -51,7 +52,7 @@
               
             <li class="nav-item dropdown">
               <li class='mt-1'>
-                <div class="image-block">
+                <div class="image_block">
                   <img class='user_picture'  src="{{ asset('storage') }}/{{ Auth::user()->picture }}">
                 </div>
               </li>

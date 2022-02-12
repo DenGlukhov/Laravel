@@ -20,8 +20,11 @@ class CheckUser
     {
         $user = Auth::user();
         $input = $request;
-                
-        if ($user->id == $input->id) return $next($request);
-        else return redirect()->route("home");
+      
+        if ($user->id == $input->user->id) {
+            return $next($request);
+        } else {
+            return redirect()->route("home");
+        } 
     }
 }

@@ -31,6 +31,11 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
     Route::post('/importCategories', [AdminController::class, 'importCategories'])->name('importCategories');
     Route::post('/createProduct', [AdminController::class, 'createProduct'])->name('createProduct');
     Route::post('/deleteProduct/{id}', [AdminController::class, 'deleteProduct'])->name('deleteProduct');
+    Route::prefix('roles')->group(function () {
+        Route::post('/add', [AdminController::class, 'addRole'])->name('addRole');
+        Route::post('/delete', [AdminController::class, 'deleteRole'])->name('deleteRole');
+        Route::post('/applyRole/{id}', [AdminController::class, 'applyRole'])->name('applyRole');
+    });
 });
 
 Route::prefix('cart')->group(function () {
@@ -41,7 +46,7 @@ Route::prefix('cart')->group(function () {
 });
 
 Route::get('category/{category}', [HomeController::class, 'category'])->name('category');
-Route::get('profile/{id}', [ProfileController::class, 'profile'])->middleware(['auth', 'check_user'])->name('profile');
+Route::get('profile/{user}', [ProfileController::class, 'profile'])->middleware(['auth', 'check_user'])->name('profile');
 Route::post('profile/save', [ProfileController::class, 'save'])->name('saveProfile');
 
 Auth::routes();

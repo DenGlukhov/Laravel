@@ -6,14 +6,9 @@
 
 @section('styles')
     <style>
-        .image_block {
-            width: 180px;
-            height: 180px;
-            border-radius: 180px;
-            overflow: hidden;
-        }
         .user-picture {
             width: 180px;
+            border-radius: 180px;
         }
         .main-address {
             font-weight: bold;
@@ -30,12 +25,19 @@
         @endforeach
       </div>
     @endif
+
+    @if(session('saveProfileSuccess'))
+        <div class="alert alert-success" role="alert">
+            Изменения успешно сохранены
+        </div>
+    @endif
+
     <form method="post" action="{{ route('saveProfile') }}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" value="{{ $user->id }}" name="userId">
         <div class="mb-3">
             <label class="form-label">Изображение</label>
-                <div class="image_block mb-2">
+                <div class="image-block mb-2">
                     <img class='user-picture mb-2' src="{{ asset('storage') }}/{{ $user->picture }}">
                 </div>        
             <input type="file" name="picture" class="form-control">

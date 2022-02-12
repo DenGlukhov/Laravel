@@ -11,6 +11,22 @@
 @endsection
 
 @section('content')
+
+@if($errors->isNotEmpty())
+<div class="alert alert-warning" role="alert">
+    @foreach($errors->all() as $error)
+        {{ $error }} 
+        @if (!$loop->last) <br> @endif
+    @endforeach
+  </div>
+@endif
+
+@if (session('emailError'))
+    <div class="alert alert-warning">
+        Указанная почта уже используется
+    </div>
+@endif
+
     <table class="table table-bordered">
         <thead class="text-center">
             <tr>
@@ -64,11 +80,14 @@
         <form method="post" action="{{ route('createOrder') }}">
             @csrf
             <label>Ваше имя</label>
-            <input disabled class="form-control mb-2" name="name" value="{{ $user->name ?? '' }}">
+            <input class="form-control mb-2" name="name" value="{{ $user->name ?? '' }}">
             <label>Ваш email</label>
-            <input disabled class="form-control mb-2" name="email" value="{{ $user->email ?? '' }}">
+            <input class="form-control mb-2" name="email" value="{{ $user->email ?? '' }}">
             <label>Ваш адрес</label>
-            <input disabled class="form-control mb-2" name="address" value="{{ $user->addresses()->where('main', 1)->first()->address ?? '' }}">
+            <input class="form-control mb-2" name="address" value="{{ $address }}">
+            <input id="register_confirmation" name="register_confirmation" type="checkbox" >
+            <label for="register_confirmation" class="mb-2">Вы будете автоматически зарегистрированы в системе</label>
+            <br>
             <button type="submit" class="btn btn-warning">Оформить заказ</button>
         </form>
     @endif

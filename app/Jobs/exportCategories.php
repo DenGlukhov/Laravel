@@ -33,7 +33,9 @@ class ExportCategories implements ShouldQueue
     public function handle()
     {
         $categories = Category::get()->toArray();
-        $file = fopen('exportCategories.csv', 'w');
+        //$time = date('Ymd_His');
+        $fileName = "exportCategories.csv";
+        $file = fopen($fileName, 'w');
 
         $columns = [
             'id',

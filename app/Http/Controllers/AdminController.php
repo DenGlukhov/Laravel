@@ -7,6 +7,7 @@ use App\Jobs\ExportCategories;
 use App\Jobs\ImportCategories;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -22,10 +23,12 @@ class AdminController extends Controller
     public function users () // Список пользователей
     {
         $users = User::get();
+        $roles = Role::get();
         
         $data = [
             'title' => "Список пользователей",
             'users' => $users,
+            'roles' => $roles
         ];
         return view('admin.users', $data);
     }
@@ -102,7 +105,6 @@ class AdminController extends Controller
         ExportCategories::dispatch();
         session()->flash('startExportCategories');
         return back();
-        
     }
 
     public function importCategories (Request $request) // Импорт списка категорий из файла
@@ -146,11 +148,6 @@ class AdminController extends Controller
         $picture = $input['picture'] ?? null;
         $category_id = $input['category_id'] ?? null;
         
-        // if (!$category_id) {
-        //     session()->flash('categoryError');
-        //     return back();
-        // }
-
         $product = new Product([
             'name' => $name,
             'description' => $description,
@@ -186,6 +183,26 @@ class AdminController extends Controller
     public function deleteProduct ($id)
     {
         Product::where('id', $id)->delete();
+        return back();
+    }
+
+    public function addRole ()
+    {
+        request()->validate([
+            'new_role' => 'required|min:3',
+        ]);
+        Role::create([
+            'name' => request('new_role')
+        ]);
+        return back();
+    }
+
+    public function applyRole ($id)
+    {
+        $user = User::find($id);
+        if (!$user->roles->contains(request('role_id'))) {
+            $user->roles()->attach(Role::find(request('role_id')));
+        }
         return back();
     }
 }

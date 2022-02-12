@@ -19,4 +19,11 @@ class Category extends Model
     {
         return $this->hasMany(Product::class);
     }
-}
+
+    public function getName ($id)
+    {
+        $name = Category::find($id)->name;
+        return $name;
+    }
+}   
+

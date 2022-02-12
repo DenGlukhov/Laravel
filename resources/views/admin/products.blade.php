@@ -20,12 +20,13 @@
 @endsection
 
 @section('content')
-    <a class="updown_button" href="#bottom" title="Вниз страницы">
-        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="color-black" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
-            <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z"/>
-        </svg>
-    </a>
-<a name="top"></a>
+<a name="top"></a>    
+<a class="updown_button" href="#bottom" title="Вниз страницы">
+    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="color-black" class="bi bi-arrow-down-square-fill" viewBox="0 0 16 16">
+        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0z"/>
+    </svg>
+</a>
+
     @if($errors->isNotEmpty())
         <div class="alert alert-warning" role="alert">
             @foreach($errors->all() as $error)
@@ -73,14 +74,14 @@
 </h3>
 
 <table class="table table-bordered">
-    <thead class="text-center">
-        <tr>
+    <thead class="text-center vertical_align_text">
+        <tr class="vertical_align_text">
             <th>#</th>
             <th>Изображение</th>
             <th>Наименование продукта</th>
             <th>Описание продукта</th>
             <th>Стоимость продукта</th>
-            <th>ID Категории</th>
+            <th>Категория</th>
             <th>Удалить</th>
         </tr>
     </thead>
@@ -94,7 +95,7 @@
             <td class="text-center">{{ $product->name }}</td>
             <td>{{ $product->description }}</td>
             <td class="text-center">{{ $product->price }} .руб</td>
-            <td class="text-center">{{ $product->category_id}}</td>
+            <td class="text-center">{{ $category->getName($product->category_id) }}</td>
             <td class="text-center">
                 <form method="post" action="{{ route('deleteProduct', $product->id) }}">
                     @csrf
@@ -107,8 +108,10 @@
         @endforeach
     </tbody>
 </table>
-<a name="bottom"></a>
+
 <a class="updown_button" href="#top" title="Наверх страницы"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="color-black" class="bi bi-arrow-up-square-fill" viewBox="0 0 16 16">
     <path d="M2 16a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2zm6.5-4.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 1 0z"/>
-  </svg></a>
+    </svg>
+</a>
+<a name="bottom"></a>
 @endsection

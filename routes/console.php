@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Category;
+use App\Models\User;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Support\Facades\Artisan;
 
@@ -140,3 +141,8 @@ Artisan::command('createCategory', function() {
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->purpose('Display an inspiring quote');
+
+Artisan::command('testfile', function () {
+    $name = User::where('email', 'a454s@gmail.com')->first();
+    echo $name;
+});
