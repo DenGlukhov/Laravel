@@ -143,6 +143,5 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Artisan::command('testfile', function () {
-    $name = User::where('email', 'a454s@gmail.com')->first();
-    echo $name;
+    dd(file_exists('public\storage\categories\exportCategories.csv'));
 });

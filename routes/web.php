@@ -27,10 +27,15 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
     Route::get('/enterAsUser/{id}', [AdminController::class, 'enterAsUser'])->name('enterAsUser');
     Route::post('/createCategory', [AdminController::class, 'createCategory'])->name('createCategory');
     Route::post('/deleteCategory/{id}', [AdminController::class, 'deleteCategory'])->name('deleteCategory');
+    Route::post('/updateCategory', [AdminController::class, 'updateCategory'])->name('updateCategory');
     Route::post('/exportCategories', [AdminController::class, 'exportCategories'])->name('exportCategories');
+    Route::post('/deleteExportFile', [AdminController::class, 'deleteExportFile'])->name('deleteExportFile');
     Route::post('/importCategories', [AdminController::class, 'importCategories'])->name('importCategories');
     Route::post('/createProduct', [AdminController::class, 'createProduct'])->name('createProduct');
+    Route::post('/exportProducts', [AdminController::class, 'exportProducts'])->name('exportProducts');
+    Route::post('/importProducts', [AdminController::class, 'importProducts'])->name('importProducts');
     Route::post('/deleteProduct/{id}', [AdminController::class, 'deleteProduct'])->name('deleteProduct');
+    Route::post('/updateProduct', [AdminController::class, 'updateProduct'])->name('updateProduct');
     Route::prefix('roles')->group(function () {
         Route::post('/add', [AdminController::class, 'addRole'])->name('addRole');
         Route::post('/delete', [AdminController::class, 'deleteRole'])->name('deleteRole');
@@ -46,7 +51,10 @@ Route::prefix('cart')->group(function () {
 });
 
 Route::get('category/{category}', [HomeController::class, 'category'])->name('category');
+
+
 Route::get('profile/{user}', [ProfileController::class, 'profile'])->middleware(['auth', 'check_user'])->name('profile');
+Route::get('profile/orders', [ProfileController::class, 'orders'])->name('orders');
 Route::post('profile/save', [ProfileController::class, 'save'])->name('saveProfile');
 
 Auth::routes();

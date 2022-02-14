@@ -15,6 +15,10 @@
     .card-title {
         height: 22px;
     }
+    .card-image {
+        overflow: hidden; /* Обрезаем все, что не помещается в область */
+        padding: 3px; /* Поля вокруг текста */
+    }
     .clip {
         overflow: hidden; /* Обрезаем все, что не помещается в область */
         text-overflow: ellipsis; /* Добавляем многоточие */
@@ -33,8 +37,8 @@
         <div class="row">
             @foreach ($products as $product)
                 <div class="col-3">
-                    <div class="card mb-4" style="width: 18rem;">
-                        <img src="{{ asset('storage')}}/{{$product->picture }}" class="card-img-top" alt="{{ $product->name }}">
+                    <div class="card mb-4" style="width: 18rem">
+                      <img src="{{ asset('storage')}}/{{$product->picture }}" class="card-img-top" alt="{{ $product->name }}">
                         <div class="card-body">
                             <h5 class="card-title clip" title="{{ $product->name }}">
                                 {{ $product->name }}

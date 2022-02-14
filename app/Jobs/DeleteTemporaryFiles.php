@@ -32,5 +32,8 @@ class DeleteTemporaryFiles implements ShouldQueue
     public function handle()
     {
         Storage::delete('public/categories/importCategories.csv');
+        Storage::delete('public/categories/exportCategories.csv');
+        Storage::delete('public/products/exportProducts.csv');
+        Storage::delete('public/products/importProducts.csv');
     }
 }

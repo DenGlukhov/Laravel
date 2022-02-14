@@ -85,9 +85,11 @@
             <input class="form-control mb-2" name="email" value="{{ $user->email ?? '' }}">
             <label>Ваш адрес</label>
             <input class="form-control mb-2" name="address" value="{{ $address }}">
+            @if (!Auth::user())
             <input id="register_confirmation" name="register_confirmation" type="checkbox" >
             <label for="register_confirmation" class="mb-2">Вы будете автоматически зарегистрированы в системе</label>
             <br>
+            @endif
             <button type="submit" class="btn btn-warning">Оформить заказ</button>
         </form>
     @endif

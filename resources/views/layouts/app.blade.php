@@ -23,20 +23,20 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
         .content_size {
-            min-height: 100%;
+            min-height: 77vh;
         }
     </style>
     @yield('styles')
 </head>
 <body>
     @include('includes.header')
-        <div id="app">
-            <main class="py-4">
-                <div class="container">
-                    @yield('content')
+        <div class="mt-3">
+            <div class="container content_size">
+                @yield('content')
+            </div>
+                <div>
+                    @include('includes.footer')
                 </div>
-            </main>
         </div>
-    @include('includes.footer')
 </body>
 </html>

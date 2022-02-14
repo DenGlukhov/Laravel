@@ -53,16 +53,14 @@
             <input name="name" value="{{ $user->name }}" class="form-control">
         </div>
         <div>
-            <label class="form-label">Текущий пароль:</label>
-            <input type="password" autocomplete="off" name="current_password" class="form-control mb-2">
+            <label class="form-label">Изменить пароль:</label>
+            <input type="password" autocomplete="off" placeholder="Введите текущий пароль" name="current_password" class="form-control mb-2">
         </div>
         <div>
-            <label class="form-label">Новый пароль:</label>
-            <input type="password" name="password" class="form-control mb-2">
+            <input type="password" placeholder="Введите новый пароль" name="password" class="form-control mb-2">
         </div>
         <div>
-            <label class="form-label">Повторите новый пароль:</label>
-            <input type="password" name="password_confirmation" class="form-control mb-2">
+            <input type="password" placeholder="Повторите новый пароль" name="password_confirmation" class="form-control mb-2">
         </div>
         <div class="mb-3">
             <label class="form-label">Список адресов:</label>
@@ -87,4 +85,7 @@
         </div>
             <button type="submit" class="btn btn-warning"><strong>Сохранить</strong></button>
     </form>
+    <a class="btn btn-danger next_button" aria-current="page" href="{{ route('orders') }}">
+        <strong>Мои заказы</strong>
+    </a>
 @endsection

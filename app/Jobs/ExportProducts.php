@@ -2,16 +2,15 @@
 
 namespace App\Jobs;
 
-use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Artisan;
 
-class ExportCategories implements ShouldQueue
+class ExportProducts implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -32,26 +31,28 @@ class ExportCategories implements ShouldQueue
      */
     public function handle()
     {
-        $categories = Category::get()->toArray();
+        $products = Product::get()->toArray();
         //$time = date('Ymd_His');
-        $fileName = "storage/app/public/categories/exportCategories.csv";
+        $fileName = "storage/app/public/products/exportProducts.csv";
         $file = fopen($fileName, 'w');
 
         $columns = [
             'id',
             'name',
             'description',
+            'price',
             'picture',
+            'category_id',
             'created_at',
             'updated_at',
         ];
 
         fputcsv($file, $columns, ';');
-        foreach ($categories as $category) {
-            $category['name'] = iconv('utf-8', 'windows-1251//IGNORE', $category['name']);
-            $category['description'] = iconv('utf-8', 'windows-1251//IGNORE', $category['description']);
-            $category['picture'] = iconv('utf-8', 'windows-1251//IGNORE', $category['picture']);
-            fputcsv($file, $category, ';');
+        foreach ($products as $product) {
+            $product['name'] = iconv('utf-8', 'windows-1251//IGNORE', $product['name']);
+            $product['description'] = iconv('utf-8', 'windows-1251//IGNORE', $product['description']);
+            $product['picture'] = iconv('utf-8', 'windows-1251//IGNORE', $product['picture']);
+            fputcsv($file, $product, ';');
         }
         fclose($file);
     }

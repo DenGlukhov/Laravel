@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Address;
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,13 +11,13 @@ use Illuminate\Support\Facades\Hash;
 
 class ProfileController extends Controller
 {
-    public function profile(User $user)
+    public function profile (User $user)
     {
         //$user = User::findOrFail($id); //Конструкция использовалась, когда в метод передавался просто id.
         return view('profile', compact('user'));
     }
     
-    public function save(Request $request)
+    public function save (Request $request)
     {
         $input = request()->all();
         $name = $input['name'];
@@ -87,5 +88,17 @@ class ProfileController extends Controller
         session()->flash('saveProfileSuccess');
         return back();
     }
+
+    public function orders() 
+    {
+        $orders = Order::get();
+        $data = [
+            'title' => 'Список заказов',
+            'orders' => $orders,
+        ];
+        return view('orders', $data);
+
+    }
+
 }   
 

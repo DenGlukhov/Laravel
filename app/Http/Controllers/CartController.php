@@ -70,7 +70,6 @@ class CartController extends Controller
             'name' => 'required',
             'email' => 'required|email',
             'address' => 'required',
-            'register_confirmation' => 'accepted'
         ]);
 
         DB::transaction(function() { //DB::transaction контролирует ход выполнения запроса, если возникает ошибка, то откатывает все изменения, которые были внесены в базу, до этого.
@@ -93,7 +92,9 @@ class CartController extends Controller
                     'address' => request('address'),
                     'main' => 1
                 ]);
-                
+                request()->validate([
+                    'register_confirmation' => 'accepted'
+                ]);
                 Auth::loginUsingId($user->id);
             }
                         
@@ -118,7 +119,7 @@ class CartController extends Controller
             $data = [
                 'name' => $user->name,
                 'products' => $order->products,
-                'password' => $password,
+                'password' => $password ?? null,
             ];
             Mail::to($user->email)->send(new OrderCreated($data));
         });

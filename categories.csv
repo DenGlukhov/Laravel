@@ -1,5 +1,53 @@
-﻿name;description
-Жесткие диски;HDD, SSD, SSD-M2a.
-Оперативная память;DDR3, DDR4.
-Материнские платы;Платформа для сборки ПК. Asus, Gigabyte.
-Корпуса;MidiTower, FullTower, MiniPC.
+name	description	price	category_id
+MSI GeForce RTX 3090 VENTUS 3X 24G OC		РѕС‚ 286В 651 РґРѕВ 289В 999В СЂ.	
+Gigabyte GeForce RTX 3090 GAMING OC 24G		РѕС‚ 284В 000 РґРѕВ 297В 990В СЂ.	
+Gigabyte GeForce RTX 3090 TURBO 24G		РѕС‚ 286В 999 РґРѕВ 329В 840В СЂ.	
+Asus GeForce RTX 3090 TUF GAMING OC		РѕС‚ 289В 295 РґРѕВ 310В 350В СЂ.	
+Gigabyte GeForce RTX 3090 VISION OC 24G		РѕС‚ 251В 560В СЂ.	
+Asus GeForce RTX 3090 TURBO		285В 810В СЂ.	
+Gigabyte AORUS RTX 3090 GAMING BOX		РѕС‚ 247В 500 РґРѕВ 285В 990В СЂ.	
+Asus GeForce RTX 3090 ROG STRIX GAMING		302В 706В СЂ.	
+MSI GeForce RTX 3090 GAMING X TRIO		РѕС‚ 299В 990 РґРѕВ 337В 436В СЂ.	
+Palit GeForce RTX 3090 GamingPro		РѕС‚ 292В 990 РґРѕВ 318В 283В СЂ.	
+EVGA GeForce RTX 3090 FTW3 ULTRA GAMING		336В 700В СЂ.	
+Asus GeForce RTX 3090 ROG STRIX OC White		302В 706В СЂ.	
+Gigabyte GeForce RTX 3090 AORUS XTREME 24G		РѕС‚ 306В 990В СЂ.	
+Gigabyte GeForce RTX 3090 AORUS XTREME WATERFORCE WB 24G		РѕС‚ 299В 990В СЂ.	
+MSI GeForce RTX 3090 SUPRIM X 24G		229В 990В СЂ.	
+Asus GeForce RTX 3090 EKWB		РѕС‚ 351В 300В СЂ.	
+Gigabyte GeForce RTX 3090 EAGLE OC 24G		299В 999В СЂ.	
+Gainward GeForce RTX 3090 Phantom		РѕС‚ 259В 000В СЂ.	
+ZOTAC GeForce RTX 3090 Trinity OC		281В 810В СЂ.	
+Gigabyte GeForce RTX 3090 AORUS MASTER 24G		РѕС‚ 261В 500В СЂ.	
+Colorful GeForce RTX 3090 Advanced OC-V		РѕС‚ 289В 999В СЂ.	
+MSI GeForce RTX 3090 GAMING TRIO 24G		РѕС‚ 294В 990В СЂ.	
+EVGA GeForce RTX 3090 XC3 ULTRA GAMING		РѕС‚ 261В 990В СЂ.	
+ZOTAC GeForce RTX 3090 AMP Extreme Holo		РѕС‚ 250В 540В СЂ.	
+ZOTAC GeForce RTX 3090 AMP Extreme Holo		РѕС‚ 250В 540В СЂ.	
+INNO3D GeForce RTX 3090 ICHILL X4		РѕС‚ 289В 999В СЂ.	
+ZOTAC GeForce RTX 3090 ArcticStorm		РѕС‚ 247В 302В СЂ.	
+EVGA GeForce RTX 3090 XC3 BLACK GAMING		РѕС‚ 265В 000В СЂ.	
+Asus GeForce RTX 3090 ROG STRIX White		РѕС‚ 270В 000В СЂ.	
+PNY GeForce RTX 3090 24GB XLR8 Gaming REVEL EPIC-X		РѕС‚ 401В 990В СЂ.	
+PNY GeForce RTX 3090 24GB XLR8 Gaming UPRISING EPIC-X		РѕС‚ 478В 975В СЂ.	
+Gigabyte GeForce RTX 3090 AORUS XTREME WATERFORCE 24G		РѕС‚ 335В 990В СЂ.	
+MSI GeForce RTX 3090 AERO 24G		РѕС‚ 226В 900В СЂ.	
+INNO3D GeForce RTX 3090 X3		РѕС‚ 249В 000В СЂ.	
+INNO3D GeForce RTX 3090 ICHILL FROSTBITE		РќРµС‚ РІ РЅР°Р»РёС‡РёРё	
+KFA2 GeForce RTX 3090 39NSM5MD1GNK		РќРµС‚ РІ РЅР°Р»РёС‡РёРё	
+Palit GeForce RTX 3090 GameRock OC		РѕС‚ 162В 600В СЂ.	
+EVGA GeForce RTX 3090 FTW3 GAMING		РќРµС‚ РІ РЅР°Р»РёС‡РёРё	
+MSI GeForce RTX 3090 VENTUS 3X 24G		РѕС‚ 162В 200В СЂ.	
+ZOTAC GeForce RTX 3090 AMP Core Holo		РѕС‚ 209В 500В СЂ.	
+Colorful GeForce RTX 3090 Neptune OC-V		РѕС‚ 272В 950В СЂ.	
+INNO3D GeForce RTX 3090 ICHILL X3		РѕС‚ 274В 399В СЂ.	
+INNO3D GeForce RTX 3090 GAMING X3		РѕС‚ 239В 770В СЂ.	
+EVGA GeForce RTX 3090 XC3 GAMING		РќРµС‚ РІ РЅР°Р»РёС‡РёРё	
+Colorful GeForce RTX 3090 Vulcan OC-V		РѕС‚ 272В 900В СЂ.	
+KFA2 GeForce RTX 3090 39NXM5MD3BNK		РќРµС‚ РІ РЅР°Р»РёС‡РёРё	
+KFA2 GeForce RTX 3090 39NXM5MD3BLK		РќРµС‚ РІ РЅР°Р»РёС‡РёРё	
+EVGA GeForce RTX 3090 K|NGP|N HYBRID GAMING		РѕС‚ 303В 302В СЂ.	
+EVGA GeForce RTX 3090 XC3 ULTRA HYDRO COPPER GAMING		РќРµС‚ РІ РЅР°Р»РёС‡РёРё	
+EVGA GeForce RTX 3090 FTW3 ULTRA HYDRO COPPER GAMING		РќРµС‚ РІ РЅР°Р»РёС‡РёРё	
+EVGA GeForce RTX 3090 XC3 ULTRA HYBRID GAMING		РѕС‚ 213В 290В СЂ.	
+EVGA GeForce RTX 3090 FTW3 ULTRA HYBRID GAMING		РѕС‚ 235В 066В СЂ.	

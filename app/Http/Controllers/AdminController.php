@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Jobs\DeleteTemporaryFiles;
 use App\Jobs\ExportCategories;
+use App\Jobs\ExportProducts;
 use App\Jobs\ImportCategories;
+use App\Jobs\ImportProducts;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Role;
@@ -94,6 +96,43 @@ class AdminController extends Controller
         return back();
     }
 
+    public function updateCategory (Request $request)
+    {
+        $input = request()->all();
+        $name = $input['name'];
+        $description = $input['description'];
+        $picture = $input['picture'] ?? null;
+        $categoryId = $input['category_id'] ?? null;
+
+        if (!$categoryId) {
+            session()->flash('needCategoryError');
+            return back(); 
+        }
+
+        $category = Category::find($categoryId);
+       
+        request()->validate([
+            'picture' => 'nullable|mimetypes:image/*',
+        ]);
+        if ($picture) {
+            $mimeType = request()->file('picture')->getMimeType();
+            $type = explode('/', $mimeType);
+
+            if ($type[0] == 'image') {
+                $ext = $picture->getClientOriginalExtension();
+                $fileName = time() . rand(10000, 99999). "." . $ext;
+                $picture->storeAs('public/categories', $fileName);
+                $category->picture = "categories/$fileName";
+            } 
+        } 
+        
+        if ($name) $category->name = $name;
+        if ($description) $category->description = $description;
+        $category->save(); //Вызываем метод save, чтобы сохранить изменения в базе.
+        session()->flash('updateCategorySuccess');
+        return back();
+    }
+
     public function deleteCategory ($id)
     {
         Category::where('id', $id)->delete();
@@ -104,6 +143,12 @@ class AdminController extends Controller
     {
         ExportCategories::dispatch();
         session()->flash('startExportCategories');
+        return back();
+    }
+
+    public function deleteExportFile ()
+    {
+        DeleteTemporaryFiles::dispatch();
         return back();
     }
 
@@ -125,7 +170,7 @@ class AdminController extends Controller
                 $importFile->storeAs('public/categories', $fileName);
 
                 ImportCategories::dispatch();
-                session()->flash('startImportCategories');
+                session()->flash('startImport');
                 
             } else {
                 session()->flash('importFileError');
@@ -183,6 +228,82 @@ class AdminController extends Controller
     public function deleteProduct ($id)
     {
         Product::where('id', $id)->delete();
+        return back();
+    }
+
+    public function updateProduct ()
+    {
+        $input = request()->all();
+        $name = $input['name'];
+        $description = $input['description'];
+        $price = $input['price'];
+        $picture = $input['picture'] ?? null;
+        $productId = $input['product_id'] ?? null;
+
+        if (!$productId) {
+            session()->flash('needProductError');
+            return back(); 
+        }
+
+        $product = Product::find($productId);
+       
+        request()->validate([
+            'picture' => 'nullable|mimetypes:image/*',
+        ]);
+        if ($picture) {
+            $mimeType = request()->file('picture')->getMimeType();
+            $type = explode('/', $mimeType);
+
+            if ($type[0] == 'image') {
+                $ext = $picture->getClientOriginalExtension();
+                $fileName = time() . rand(10000, 99999). "." . $ext;
+                $picture->storeAs('public/products', $fileName);
+                $product->picture = "products/$fileName";
+            } 
+        } 
+        
+        if ($name) $product->name = $name;
+        if ($description) $product->description = $description;
+        if ($price) $product->price = $price;
+        $product->save(); //Вызываем метод save, чтобы сохранить изменения в базе.
+        session()->flash('updateProductSuccess');
+        return back();
+    }
+
+    public function exportProducts () // Экспорт списка продуктов в файл
+    {
+        ExportProducts::dispatch();
+        session()->flash('startExport');
+        return back();
+    }
+
+    public function importProducts (Request $request)
+    {
+        $input = request()->all();
+        $importFile = $input['importFile'] ?? null;
+
+        if ($importFile) {
+           
+            $mimeType = $request->file('importFile')->getMimeType();
+            $type = explode('/', $mimeType);
+            
+            if ($type[0] == 'text') {
+                $ext = $importFile->getClientOriginalExtension();
+                $fileName = "importProducts." . $ext;
+                $importFile->storeAs('public/products', $fileName);
+
+                ImportProducts::dispatch();
+                session()->flash('startImport');
+                
+            } else {
+                session()->flash('importFileError');
+            }
+
+        } else {
+            session()->flash('importFileIsMissing');
+        }
+        
+        DeleteTemporaryFiles::dispatch();
         return back();
     }
 
