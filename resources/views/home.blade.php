@@ -24,8 +24,8 @@
 <div class="container">
     <div class="row">
         @foreach ($categories as $category)
-        <div class="col-3">
-            <div class="category-card card mb-4" style="background-color: rgb(204, 218, 174); display: inline-flex; flex-flow: column nowrap; ">
+        <div class="col-3" style="display: flex">
+            <div class="category-card card mb-4" style="background-color: rgb(212, 233, 118); display: inline-flex; flex-flow: column nowrap; flex:1 1; justify-content: space-evenly; ">
                 <img src="{{ asset('storage')}}/{{$category->picture }}" class="card-img-top" alt="{{ $category->name}}">
                 <div class="card-body">
                     <h5 class="card-title" title="{{ $category->name }}">

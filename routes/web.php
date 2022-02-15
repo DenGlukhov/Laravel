@@ -52,9 +52,8 @@ Route::prefix('cart')->group(function () {
 
 Route::get('category/{category}', [HomeController::class, 'category'])->name('category');
 
-
-Route::get('profile/{user}', [ProfileController::class, 'profile'])->middleware(['auth', 'check_user'])->name('profile');
 Route::get('profile/orders', [ProfileController::class, 'orders'])->name('orders');
+Route::get('profile/{user}', [ProfileController::class, 'profile'])->middleware(['auth', 'check_user'])->name('profile');
 Route::post('profile/save', [ProfileController::class, 'save'])->name('saveProfile');
 
 Auth::routes();

@@ -90,7 +90,7 @@ class ProfileController extends Controller
     }
 
     public function orders() 
-    {
+    {   
         $orders = Order::get();
         $data = [
             'title' => 'Список заказов',

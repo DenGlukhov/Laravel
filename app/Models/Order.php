@@ -23,4 +23,12 @@ class Order extends Model
                         ])
                     ->withTimestamps(); 
     }
+
+    public function getAddress($id)
+    {   
+        $address = Address::find($id)->address;
+
+        return $address;
+    }
+
 }

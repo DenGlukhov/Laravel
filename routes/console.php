@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Address;
 use App\Models\Category;
 use App\Models\User;
 use Illuminate\Foundation\Inspiring;
@@ -143,5 +144,7 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote');
 
 Artisan::command('testfile', function () {
-    dd(file_exists('public\storage\categories\exportCategories.csv'));
+    $address = Address::find(7);
+    dd($address->address);
+    return $address->address;
 });
