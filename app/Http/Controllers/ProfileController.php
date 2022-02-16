@@ -89,9 +89,10 @@ class ProfileController extends Controller
         return back();
     }
 
-    public function orders() 
+    public function orders () 
     {   
-        $orders = Order::get();
+        $user = Auth::user()->id;
+        $orders = Order::where('user_id', $user)->get();
         $data = [
             'title' => 'Список заказов',
             'orders' => $orders,

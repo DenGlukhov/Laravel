@@ -85,7 +85,7 @@
         </div>
             <button type="submit" class="btn btn-warning"><strong>Сохранить</strong></button>
     </form>
-    <a class="btn btn-danger next_button" aria-current="page" href="{{ route('orders') }}">
+    <a class="btn btn-danger next_button mt-2" aria-current="page" href="{{ route('orders', Auth::user()->id) }}">
         <strong>Мои заказы</strong>
     </a>
 @endsection

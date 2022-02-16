@@ -48,13 +48,16 @@ Route::prefix('cart')->group(function () {
     Route::post('/addToCart', [CartController::class, 'addToCart'])->name('addToCart');
     Route::post('/removeFromCart', [CartController::class, 'removeFromCart'])->name('removeFromCart');
     Route::post('/createOrder', [CartController::class, 'createOrder'])->name('createOrder');
+    Route::post('/repeatOrder', [CartController::class, 'repeatOrder'])->name('repeatOrder');
 });
 
 Route::get('category/{category}', [HomeController::class, 'category'])->name('category');
 
-Route::get('profile/orders', [ProfileController::class, 'orders'])->name('orders');
-Route::get('profile/{user}', [ProfileController::class, 'profile'])->middleware(['auth', 'check_user'])->name('profile');
-Route::post('profile/save', [ProfileController::class, 'save'])->name('saveProfile');
+Route::prefix('profile')->group(function () {
+Route::get('/orders', [ProfileController::class, 'orders'])->name('orders');
+Route::get('/{user}', [ProfileController::class, 'profile'])->middleware(['auth', 'check_user'])->name('profile');
+Route::post('/save', [ProfileController::class, 'save'])->name('saveProfile');
+});
 
 Auth::routes();
 

@@ -127,4 +127,16 @@ class CartController extends Controller
         session()->forget('cart');
         return back();
     }
+
+    public function repeatOrder ()
+    {
+        $orderId = request('order_id');
+        $orders = Order::find($orderId)->products->pluck('pivot');
+        $cart = [];
+        foreach ($orders as $order) {
+            $cart[$order->product_id] = $order->quantity;
+        }
+        session()->put('cart', $cart);
+        return redirect('cart');
+    }
 }
