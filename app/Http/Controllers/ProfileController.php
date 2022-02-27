@@ -24,7 +24,7 @@ class ProfileController extends Controller
         $email = $input['email'];
         $userId = $input['userId'];
         $picture = $input['picture'] ?? null;
-        $newAddress = $input['new_address'];
+        $newAddress = $input['new_address'] ?? null;
         $mainAddress = $input['main_address'] ?? null;
         $setMainAddress = $input['set_main_address'] ?? null;
 
@@ -33,7 +33,7 @@ class ProfileController extends Controller
         request()->validate([
             'name' => 'required',
             'email' => "email|required|unique:users,email,{$user->id}",
-            'picture' => 'mimetypes:image/*',
+            'picture' => 'mimetypes:image/*|nullable',
             'current_password' => 'current_password|required_with:password|nullable',
             'password' => 'confirmed|min:8|nullable'
         ]);
@@ -42,13 +42,15 @@ class ProfileController extends Controller
             $user->password = Hash::make($input['password']);
             $user->save();
         }
-       
-        Address::where('user_id', $user->id)->update([
-            'main' => 0,
-        ]);
-        Address::where('id', $mainAddress)->update([
-            'main' => 1,
-        ]);
+        
+        if ($mainAddress) {
+            Address::where('user_id', $user->id)->update([
+                'main' => 0,
+            ]);
+            Address::where('id', $mainAddress)->update([
+                'main' => 1,
+            ]);
+        }
 
         if ($newAddress && $setMainAddress) {
             Address::where('user_id', $user->id)->update([
@@ -98,8 +100,6 @@ class ProfileController extends Controller
             'orders' => $orders,
         ];
         return view('orders', $data);
-
     }
-
 }   
 

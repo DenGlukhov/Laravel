@@ -12,8 +12,9 @@
     </title>
 
     <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/test.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/test.js') }}" defer></script> --}}
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -29,14 +30,16 @@
     @yield('styles')
 </head>
 <body>
-    @include('includes.header')
-        <div class="mt-3">
-            <div class="container content_size">
-                @yield('content')
-            </div>
-                <div>
-                    @include('includes.footer')
+    <div id="app">
+        @include('includes.header')
+            <div class="mt-3">
+                <div class="container content_size">
+                    @yield('content')
                 </div>
-        </div>
+                    <div>
+                        @include('includes.footer')
+                    </div>
+            </div>
+    </div>
 </body>
 </html>

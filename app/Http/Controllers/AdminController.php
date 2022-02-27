@@ -60,7 +60,7 @@ class AdminController extends Controller
     public function enterAsUser ($id) // Вход на сайт под любым пользователем из списка
     {
         Auth::loginUsingId($id);
-        return redirect()->route('admin');
+        return redirect()->route('profile', $id);
     }
 
     public function createCategory (Request $request) // Создание новой категории

@@ -87,7 +87,7 @@
             <select class="form-control" name="category_id">
                 <option disabled selected>--Выберите категорию--</option>
                 @foreach ($categories as $category)
-                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    <option value="{{ $category->id }}">{{ $category->name }}</option>
                 @endforeach
             </select>
         </div>
@@ -100,10 +100,11 @@
             <label class="form-label"><h4>Редактировать существующий продукт</h4></label>
             <select class="form-control" name="product_id">
                 <option disabled selected>--Выберите продукт--</option>
-                @foreach ($products as $product)
-                <option value="{{ $product->id }}">{{ $product->name }}</option>
-                @endforeach
+                    @foreach ($products as $product)
+                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                    @endforeach
             </select>
+            
         </div>
         <div class="mb-2">
             <input type="text" name="name" placeholder="Введите новое наименование продукта" class="form-control">

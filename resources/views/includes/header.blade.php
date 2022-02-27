@@ -1,14 +1,7 @@
 <style>
-    .image_block {
-        width: 30px;
-        height: 30px;
-        
-        overflow: hidden;
-    }
-    .user_picture {
-        width: 30px;
-        border-radius: 30px;
-    }
+  .vertical-align {
+    vertical-align: middle;
+  }
 </style>
 
 <header class="p-3 bg-dark text-white">
@@ -26,7 +19,11 @@
       <div class="text-end">
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li>
-            <a class="nav-link px-2 text-white" href="{{ route('cart') }}">Корзина ({{ array_sum(session('cart') ?? []) }})</a>
+            <a class="nav-link px-2 text-white vertical-align" href="{{ route('cart') }}"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-cart4" viewBox="0 0 16 16">
+              <path d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5zM3.14 5l.5 2H5V5H3.14zM6 5v2h2V5H6zm3 0v2h2V5H9zm3 0v2h1.36l.5-2H12zm1.11 3H12v2h.61l.5-2zM11 8H9v2h2V8zM8 8H6v2h2V8zM5 8H3.89l.5 2H5V8zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0zm9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0z"/>
+              </svg> 
+                <span id="cartProductsQuantity">({{ array_sum(session('cart') ?? []) }})</span>
+            </a>
           </li>
           @guest
             
@@ -45,17 +42,18 @@
             @else
             
             @if (Auth::user()->isAdmin())
-              <li class="nav-item">
-                <a class="nav-link px-2 text-white" href="{{ route('admin') }}">Админка</a>
-              </li>
+            <a id="navbarDropdown" class="nav-link dropdown-toggle px-2 text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                Панель управления
+            </a>
+              <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-macos mx-0 border-0 shadow" style="width: 220px;">
+                <li><a class="dropdown-item" href="{{ route('adminUsers') }}">Список пользователей</a></li>
+                <li><a class="dropdown-item" href="{{ route('adminCategories') }}">Список категорий</a></li>
+                <li><a class="dropdown-item" href="{{ route('adminProducts') }}">Список продуктов</a></li>
+              </ul>
+              {{-- <li class="nav-item">
+                <a class="nav-link px-2 text-white" href="{{ route('admin') }}">Панель управления</a>
+              </li> --}}
             @endif
-              
-            <li class="nav-item dropdown">
-              <li class='mt-1'>
-                <div class="image_block">
-                  <img class='user_picture'  src="{{ asset('storage') }}/{{ Auth::user()->picture }}">
-                </div>
-              </li>
               <a id="navbarDropdown" class="nav-link dropdown-toggle px-2 text-white" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 {{ Auth::user()->name }}
               </a>
@@ -72,7 +70,6 @@
               </div>
             </li>
           @endguest
-
         </ul>
       </div>
     </div>

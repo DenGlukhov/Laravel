@@ -7,7 +7,8 @@
 @section('styles')
     <style>
         .user-picture {
-            width: 180px;
+            display:flex;
+            width: 180px ;
             border-radius: 180px;
         }
         .main-address {
@@ -31,7 +32,15 @@
             Изменения успешно сохранены
         </div>
     @endif
-
+        {{-- <example-component></example-component> --}}
+        {{-- <profile-component
+            :user="{{ $user }}"
+            :addresses="{{ $user->addresses }}"
+            route-profile="{{ route('profile', '') }}"
+            route-orders="{{ route('orders') }}" 
+            page-title="Страница профиля" 
+            :errors="{{ $errors }}"
+        ></profile-component> --}}
     <form method="post" action="{{ route('saveProfile') }}" enctype="multipart/form-data">
         @csrf
         <input type="hidden" value="{{ $user->id }}" name="userId">
@@ -66,8 +75,9 @@
             <label class="form-label">Список адресов:</label>
             <ul>
                 @forelse ($user->addresses as $address)
+                    <input class="form-check-input" @if ($address->main) checked @endif id="{{ $address->id }}" name="main_address" type="radio" value="{{ $address->id }}">
                     <label for="{{ $address->id }}">{{$address->address}}</label>
-                    <input class="form-check-input" @if ($address->main) checked @endif id="{{ $address->id }}" name="main_address" type="radio" value="{{ $address->id }}"><br>
+                    <br>
                 @empty 
                     <em>- Адреса не указаны -</em>
                 @endforelse

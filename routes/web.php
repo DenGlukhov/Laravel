@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
-    Route::get('/', [AdminController::class, 'admin'])->name('admin');
+    //Route::get('/', [AdminController::class, 'admin'])->name('admin');
     Route::get('/users', [AdminController::class, 'users'])->name('adminUsers');
     Route::get('/products', [AdminController::class, 'products'])->name('adminProducts');
     Route::get('/categories', [AdminController::class, 'categories'])->name('adminCategories');
@@ -36,6 +36,7 @@ Route::prefix('admin')->middleware(['auth', 'is_admin'])->group(function () {
     Route::post('/importProducts', [AdminController::class, 'importProducts'])->name('importProducts');
     Route::post('/deleteProduct/{id}', [AdminController::class, 'deleteProduct'])->name('deleteProduct');
     Route::post('/updateProduct', [AdminController::class, 'updateProduct'])->name('updateProduct');
+    
     Route::prefix('roles')->group(function () {
         Route::post('/add', [AdminController::class, 'addRole'])->name('addRole');
         Route::post('/delete', [AdminController::class, 'deleteRole'])->name('deleteRole');
@@ -52,6 +53,7 @@ Route::prefix('cart')->group(function () {
 });
 
 Route::get('category/{category}', [HomeController::class, 'category'])->name('category');
+Route::get('category/{category}/getProducts', [HomeController::class, 'getProducts']);
 
 Route::prefix('profile')->group(function () {
 Route::get('/orders', [ProfileController::class, 'orders'])->name('orders');

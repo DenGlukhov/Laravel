@@ -42,7 +42,7 @@ class CartController extends Controller
            $cart[$productId] = 1;
        }
        session()->put('cart', $cart);
-       return back();
+       return $cart[$productId];
     }
 
     public function removeFromCart ()
@@ -51,7 +51,7 @@ class CartController extends Controller
         $cart = session('cart') ?? [];
 
         if (!isset($cart[$productId]))
-            return back();
+            return 0;
 
         $quantity = $cart[$productId];
         if ($quantity > 1) {
@@ -61,7 +61,7 @@ class CartController extends Controller
         }
 
         session()->put('cart', $cart);
-        return back();
+        return $cart[$productId] ?? 0;
     }
 
     public function createOrder ()

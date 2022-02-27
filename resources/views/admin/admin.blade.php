@@ -4,17 +4,6 @@
     Админка
 @endsection
 
-@section('styles')
-    <style>
-        .unload_upload_button {
-            width: 235px;
-        }
-        .next_button {
-           width: 350px; 
-        }
-    </style>
-@endsection
-
 @section('content')
     <ul class="nav nav-pills">
         <li class="nav-item col-4">

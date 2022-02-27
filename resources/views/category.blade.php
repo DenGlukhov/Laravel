@@ -2,7 +2,7 @@
 
 @section('content')
 
-@section('styles')
+{{-- @section('styles')
 <style>
     .product-price {
         font-size: 23px;
@@ -31,10 +31,13 @@
         line-height: 37px;
     }
 </style>
-@endsection
+@endsection --}}
 
     <div class="container">
-        <div class="row">
+        <category-products-component 
+        category = "{{ $category }}">
+        </category-products-component>
+        {{-- <div class="row">
             @foreach ($products as $product)
                 <div class="col-3">
                     <div class="card mb-4" style="width: 18rem">
@@ -66,6 +69,6 @@
                     </div>
                 </div>
             @endforeach
-        </div>
+        </div> --}}
     </div>
 @endsection
